@@ -17,12 +17,7 @@ function injectEvent (obj, form) {
   });
 
   return newObj;
-}// import Func from './Func';
-// import WrapperInput from './WrapperInput';
-// import WrapperSwitch from './WrapperSwitch';
-// import WrapperUpload from './WrapperUpload';
-
-var AntdElements = {
+}var AntdElements = {
   // 类一
   input: antDesignVue.Input,
   inputnumber: antDesignVue.InputNumber,
@@ -291,156 +286,153 @@ function createFormItem (obj, form, createElement) {
 }function objectWithoutProperties$1 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
 
 
-function Form$1 () {
+var Form$1 = {
+  props: {
+    layout: String,
+    formLayout: Object,
+    data: [Array, Function],
+    _bindForm: Function,
+    autoSearchEvent: Function,
+  },
+  data: function data() {
+    return {
+      form: this.$form.createForm(this)
+    }
+  },
+  beforeMount: function beforeMount() {
+    var ref = this.$props;
+    var _bindForm = ref._bindForm; if ( _bindForm === void 0 ) _bindForm = function () { };
+    _bindForm(this.form);
+  },
 
-  return {
-    props: {
-      layout: String,
-      formLayout: Object,
-      data: [Array, Function],
-      _bindForm: Function,
-      autoSearchEvent: Function,
+  render: function render(h) {
+    var ref = this.$props;
+    var formLayout = ref.formLayout;
+    var layout = ref.layout; if ( layout === void 0 ) layout = "horizontal";
+    var data = ref.data; if ( data === void 0 ) data = [];
+    var autoSearchEvent = ref.autoSearchEvent;
+    var form = this.form;
+    var getFieldDecorator = form.getFieldDecorator;
+
+    var _formLayout = formLayout || (layout === 'horizontal' ? {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 14 },
+    } : {});
+
+    return h('a-form', {
+      props: {
+        form: this.form,
+        layout: layout,
+        // ..._formLayout, // vue 版本Form是没有 labelCol, WrapperCol, FormItem 有
+        form: this.form,
+      }
+    }, [
+        this._renderElement(h, _formLayout, form, getFieldDecorator, autoSearchEvent, this._transFuncToObj(data, form))
+      ])
+  },
+
+  methods: {
+    _getFieldsValue: function _getFieldsValue() {
+      var ref = this.props;
+      var form = ref.form;
+      var fieldsValue = form.getFieldsValue();
+
+      var formValues = filter(fieldsValue);
+
+      return formValues;
     },
-    data: function data() {
-      return {
-        form: this.$form.createForm(this)
+
+    _transFuncToObj: function _transFuncToObj(func, form) {
+      if ( func === void 0 ) func = {};
+
+      if (Object.prototype.toString.call(func) === '[object Function]') {
+        return func(form, this)
+      } else {
+        return func;
       }
     },
-    beforeMount: function beforeMount() {
-      var ref = this.$props;
-      var _bindForm = ref._bindForm; if ( _bindForm === void 0 ) _bindForm = function () { };
-      _bindForm(this.form);
-    },
 
-    render: function render(h) {
-      var ref = this.$props;
-      var formLayout = ref.formLayout;
-      var layout = ref.layout; if ( layout === void 0 ) layout = "horizontal";
-      var data = ref.data; if ( data === void 0 ) data = [];
-      var autoSearchEvent = ref.autoSearchEvent;
-      var form = this.form;
-      var getFieldDecorator = form.getFieldDecorator;
+    _renderElement: function _renderElement(createElement, formLayout, form, getFieldDecorator, autoSearchEvent, data) {
+      var this$1 = this;
+      if ( data === void 0 ) data = [];
 
-      var _formLayout = formLayout || (layout === 'horizontal' ? {
-        labelCol: { span: 6 },
-        wrapperCol: { span: 14 },
-      } : {});
-
-      return h('a-form', {
-        props: {
-          form: this.form,
-          layout: layout,
-          // ..._formLayout, // vue 版本Form是没有 labelCol, WrapperCol, FormItem 有
-          form: this.form,
-        }
-      }, [
-          this._renderElement(h, _formLayout, form, getFieldDecorator, autoSearchEvent, this._transFuncToObj(data, form))
-        ])
-    },
-
-    methods: {
-      _getFieldsValue: function _getFieldsValue() {
-        var ref = this.props;
-        var form = ref.form;
-        var fieldsValue = form.getFieldsValue();
-
-        var formValues = filter(fieldsValue);
-
-        return formValues;
-      },
-
-      _transFuncToObj: function _transFuncToObj(func, form) {
-        if ( func === void 0 ) func = {};
-
-        if (Object.prototype.toString.call(func) === '[object Function]') {
-          return func(form, this)
-        } else {
-          return func;
-        }
-      },
-
-      _renderElement: function _renderElement(createElement, formLayout, form, getFieldDecorator, autoSearchEvent, data) {
-        var this$1 = this;
-        if ( data === void 0 ) data = [];
-
-        return data.map(function (item, index) {
-          var visible = item.visible; if ( visible === void 0 ) visible = true;
-          var label = item.label;
-          var extra = item.extra; if ( extra === void 0 ) extra = null;
-          var hasFeedback = item.hasFeedback; if ( hasFeedback === void 0 ) hasFeedback = false;
-          var formItemLayout = item.formItemLayout; if ( formItemLayout === void 0 ) formItemLayout = {};
-          var unbind = item.unbind;
-          var key = item.key; if ( key === void 0 ) key = "random_key_" + (Math.random());
-          var config = item.config; if ( config === void 0 ) config = {};
-          var render = item.render;
-          var renderFix = item.renderFix;
-          var bindSearch = item.bindSearch; if ( bindSearch === void 0 ) bindSearch = false;
-          var type = item.type;
-          var rest = objectWithoutProperties$1( item, ["visible", "label", "extra", "hasFeedback", "formItemLayout", "unbind", "key", "config", "render", "renderFix", "bindSearch", "type"] );
-          var props = rest;
-          var ret = null;
-          if (visible === false) {
-            return;
-          } else if (type === 'br') {
-            return createElement('br', {
-              key: index
-            })
-          } else if (type === 'span') {
-            return createElement('span', {
-              key: index,
-              props: props,
-            }, [
-                label
-              ])
-          } else if (type === 'hidden') {
-            return createElement('a-form-item', {
-              style: {
-                display: 'none'
-              },
-              props: {
-                key: index,
-              }
-            }, [
-                getFieldDecorator(key, this$1._transFuncToObj(config, form))(createFormItem({
-                  type: 'input',
-                  hidden: true,
-                }, form, createElement))
-              ])
-          } else if (type === 'group') {
-            ret = this$1._renderElement(createElement, formLayout, form, getFieldDecorator, autoSearchEvent, item.children);
-          } else if (render) {
-            var renderItem = render(form, Form.Item) || createElement('input', {
-              attrs: {
-                placeholder: "default: render need return"
-              }
-            });
-            ret = unbind === true ? renderItem : getFieldDecorator(key, this$1._transFuncToObj(config, form))(renderItem);
-          } else {
-
-            var _item = Object.assign({}, {type: type},
-              props);
-            if (bindSearch) {
-              _item.autoSearchEvent = autoSearchEvent;
-            }
-            var renderItem$1 = createFormItem(_item, form, createElement);
-            ret = type === 'button' ? renderItem$1 : getFieldDecorator(key, this$1._transFuncToObj(config, form, this$1))(renderItem$1);
-          }
-
-          return createElement('a-form-item', {
-            props: Object.assign({}, {label: label,
-              key: index,
-              extra: extra,
-              hasFeedback: hasFeedback},
-              formLayout,
-              formItemLayout)
+      return data.map(function (item, index) {
+        var visible = item.visible; if ( visible === void 0 ) visible = true;
+        var label = item.label;
+        var extra = item.extra; if ( extra === void 0 ) extra = null;
+        var hasFeedback = item.hasFeedback; if ( hasFeedback === void 0 ) hasFeedback = false;
+        var formItemLayout = item.formItemLayout; if ( formItemLayout === void 0 ) formItemLayout = {};
+        var unbind = item.unbind;
+        var key = item.key; if ( key === void 0 ) key = "random_key_" + (Math.random());
+        var config = item.config; if ( config === void 0 ) config = {};
+        var render = item.render;
+        var renderFix = item.renderFix;
+        var bindSearch = item.bindSearch; if ( bindSearch === void 0 ) bindSearch = false;
+        var type = item.type;
+        var rest = objectWithoutProperties$1( item, ["visible", "label", "extra", "hasFeedback", "formItemLayout", "unbind", "key", "config", "render", "renderFix", "bindSearch", "type"] );
+        var props = rest;
+        var ret = null;
+        if (visible === false) {
+          return;
+        } else if (type === 'br') {
+          return createElement('br', {
+            key: index
+          })
+        } else if (type === 'span') {
+          return createElement('span', {
+            key: index,
+            props: props,
           }, [
-              renderFix ? renderFix(ret) : ret
+              label
             ])
-        })
-      }
+        } else if (type === 'hidden') {
+          return createElement('a-form-item', {
+            style: {
+              display: 'none'
+            },
+            props: {
+              key: index,
+            }
+          }, [
+              getFieldDecorator(key, this$1._transFuncToObj(config, form))(createFormItem({
+                type: 'input',
+                hidden: true,
+              }, form, createElement))
+            ])
+        } else if (type === 'group') {
+          ret = this$1._renderElement(createElement, formLayout, form, getFieldDecorator, autoSearchEvent, item.children);
+        } else if (render) {
+          var renderItem = render(form, Form.Item) || createElement('input', {
+            attrs: {
+              placeholder: "default: render need return"
+            }
+          });
+          ret = unbind === true ? renderItem : getFieldDecorator(key, this$1._transFuncToObj(config, form))(renderItem);
+        } else {
+
+          var _item = Object.assign({}, {type: type},
+            props);
+          if (bindSearch) {
+            _item.autoSearchEvent = autoSearchEvent;
+          }
+          var renderItem$1 = createFormItem(_item, form, createElement);
+          ret = type === 'button' ? renderItem$1 : getFieldDecorator(key, this$1._transFuncToObj(config, form, this$1))(renderItem$1);
+        }
+
+        return createElement('a-form-item', {
+          props: Object.assign({}, {label: label,
+            key: index,
+            extra: extra,
+            hasFeedback: hasFeedback},
+            formLayout,
+            formItemLayout)
+        }, [
+            renderFix ? renderFix(ret) : ret
+          ])
+      })
     }
   }
-}function objectWithoutProperties$2 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
+};function objectWithoutProperties$2 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
 
 function hoc (Component) {
   return {
@@ -640,9 +632,10 @@ function hoc (Component) {
 
     props: Object.assign({}, Component.props),
 
-    beforeMount: function beforeMount() {
-      // this.hoc = null;
-      this.form = null;
+    data: function data() {
+      return {
+        form: null
+      }
     },
 
     render: function render(h) {
@@ -682,82 +675,186 @@ function hoc (Component) {
   }
 }function objectWithoutProperties$3 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
 
+var VueAntdSuperForm = withSearch({
+  props: {
+    type: String,
+    search: Object,
+    params: Function,
+    autoSearchEvent: Function,
+    _bindForm: Function,
+    table: Object,
+    formStyle: Object,
+    tableStyle: Object
+  },
+  render: function render(h) {
+    var ref = this.$props;
+    var type = ref.type; if ( type === void 0 ) type = 'table';
+    var search = ref.search;
+    var autoSearchEvent = ref.autoSearchEvent;
+    var _bindForm = ref._bindForm;
+    var table = ref.table;
+    var formStyle = ref.formStyle; if ( formStyle === void 0 ) formStyle = {};
+    var tableStyle = ref.tableStyle; if ( tableStyle === void 0 ) tableStyle = {};
+    var rest = objectWithoutProperties$3( ref, ["type", "search", "autoSearchEvent", "_bindForm", "table", "formStyle", "tableStyle"] );
+    var props = rest;
 
-var SuperPage = function () {
-  return {
-    props: {
-      type: String,
-      search: Object,
-      params: Function,
-      autoSearchEvent: Function,
-      _bindForm: Function,
-      table: Object,
-      formStyle: Object,
-      tableStyle: Object
+
+    return h('div', null, [
+      h('div', {
+        style: Object.assign({}, {"background": "#fff",
+          "padding": "20px",
+          "border-radius": "5px",
+          "margin-bottom": "10px"},
+          formStyle),
+      }, [
+          h(Form$1, {
+            props: Object.assign({}, search,
+              {autoSearchEvent: autoSearchEvent,
+              _bindForm: _bindForm})
+          })
+        ]),
+      h('div', {
+        style: Object.assign({}, {"background": "#fff",
+          "padding": "20px",
+          "border-radius": "5px",
+          "margin-bottom": "10px"},
+          tableStyle),
+      }, [
+          h(type === "table" ? Table : List, {
+            ref: "list",
+            props: Object.assign({}, table,
+              props)
+          })
+        ])
+    ])
+  },
+  methods: {
+    reset: function reset(needLoad) {
+      if ( needLoad === void 0 ) needLoad = true;
+
+      this.$refs.list.reset(needLoad);
     },
-    render: function render(h) {
-      var ref = this.$props;
-      var type = ref.type; if ( type === void 0 ) type = 'table';
-      var search = ref.search;
-      var autoSearchEvent = ref.autoSearchEvent;
-      var _bindForm = ref._bindForm;
-      var table = ref.table;
-      var formStyle = ref.formStyle; if ( formStyle === void 0 ) formStyle = {};
-      var tableStyle = ref.tableStyle; if ( tableStyle === void 0 ) tableStyle = {};
-      var rest = objectWithoutProperties$3( ref, ["type", "search", "autoSearchEvent", "_bindForm", "table", "formStyle", "tableStyle"] );
-      var props = rest;
 
-
-      return h('div', null, [
-        h('div', {
-          style: Object.assign({}, {"background": "#fff",
-            "padding": "20px",
-            "border-radius": "5px",
-            "margin-bottom": "10px"},
-            formStyle),
-        }, [
-            h(Form$1(), {
-              props: Object.assign({}, search,
-                {autoSearchEvent: autoSearchEvent,
-                _bindForm: _bindForm})
-            })
-          ]),
-        h('div', {
-          style: Object.assign({}, {"background": "#fff",
-            "padding": "20px",
-            "border-radius": "5px",
-            "margin-bottom": "10px"},
-            tableStyle),
-        }, [
-            h(type === "table" ? Table : List, {
-              ref: "list",
-              props: Object.assign({}, table,
-                props)
-            })
-          ])
-      ])
-    },
-    methods: {
-      reset: function reset(needLoad) {
-        if ( needLoad === void 0 ) needLoad = true;
-
-        this.$refs.list.reset(needLoad);
-      },
-
-      refresh: function refresh() {
-        this.$refs.list.refresh();
-      }
+    refresh: function refresh() {
+      this.$refs.list.refresh();
     }
   }
-};
+});function objectWithoutProperties$4 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
 
-var VueAntdSuperForm = withSearch(SuperPage());// Import vue components
+var Modal = {
+  props: Object.assign({}, antDesignVue.Modal.props,
+    {footer: [Array, Function],
+    search: [Object, Function],
+    action: Function,
+    extraParams: [Object, Function],
+    actionError: Function,
+    actionSuccess: Function}),
+  data: function data() {
+    return {
+      isVisible: this.$props.visible || false,
+      form: null,
+    }
+  },
+  mounted: function mounted() {
+    console.log(this.form);
+  },
+  render: function render(h) {
+    var this$1 = this;
+
+    var ref = this.$props;
+    var children = ref.children;
+    var visible = ref.visible;
+    var cancel = ref.cancel; if ( cancel === void 0 ) cancel = function () { };
+    var afterClose = ref.afterClose; if ( afterClose === void 0 ) afterClose = function () { };
+    var ok = ref.ok; if ( ok === void 0 ) ok = function (e, form, show) { };
+    var footer = ref.footer; if ( footer === void 0 ) footer = function (cancel, ok) { };
+    var search = ref.search;
+    var form = ref.form; if ( form === void 0 ) form = {};
+    var action = ref.action; if ( action === void 0 ) action = false;
+    var extraParams = ref.extraParams;
+    var actionError = ref.actionError;
+    var actionSuccess = ref.actionSuccess;
+    var rest = objectWithoutProperties$4( ref, ["children", "visible", "cancel", "afterClose", "ok", "footer", "search", "form", "action", "extraParams", "actionError", "actionSuccess"] );
+    var pr = rest;
+
+    var _onCancel = function () { return this$1._onCancel(cancel); },
+      _onOk = action !== false ? this.autoHandleSubmit : function (e) { ok(e, this$1.form, function (f) { return this$1.show(f); }); };
+
+    return h(antDesignVue.Modal, {
+      props: Object.assign({}, {visible: this.isVisible,
+        afterClose: function () { return this$1._afterClose(afterClose); },
+        footer: toString.call(footer) === "[object Array]" ? footer : footer(_onCancel, _onOk)},
+        pr),
+      on: {
+        cancel: _onCancel,
+        ok: _onOk,
+      }
+    }, [
+        h(Form$1, {
+          props: Object.assign({}, {_bindForm: function (form) { this$1.form = form; }},
+            search)
+        })
+      ])
+  },
+  methods: {
+    show: function show(isShow, callback) {
+      if ( isShow === void 0 ) isShow = true;
+
+      this.isVisible = isShow;
+      callback && callback();
+    },
+
+    _onCancel: function _onCancel(callback) {
+      this.show(false, callback);
+    },
+
+    _afterClose: function _afterClose(callback) {
+      this.form.resetFields();
+      callback && callback();
+    },
+
+    _getSearchParams: function _getSearchParams() {
+      return filter(this.form.getFieldsValue())
+    },
+
+    // 处理 自动 action start
+    autoHandleSubmit: function autoHandleSubmit() {
+      var this$1 = this;
+
+      var ref = this.props;
+      var action = ref.action;
+      var extraParams = ref.extraParams; if ( extraParams === void 0 ) extraParams = {};
+      var actionError = ref.actionError; if ( actionError === void 0 ) actionError = function (res) { console.log(res); };
+      var actionSuccess = ref.actionSuccess; if ( actionSuccess === void 0 ) actionSuccess = function (res) { console.log(res); };
+      var valueMap = ref.valueMap; if ( valueMap === void 0 ) valueMap = function (res) {
+        return {
+          status: res.status
+        }
+      };
+      var _val = toString.call(extraParams) === "[object Function]" ? extraParams() : extraParams;
+      var values = Object.assign({}, _val,
+        this._getSearchParams());
+      action(values).then(function (res) {
+        var ref = valueMap(res);
+        var status = ref.status;
+        if (status) {
+          this$1.show(false, function () { return actionSuccess('操作成功'); });
+        } else {
+          actionError(res.message);
+        }
+      }).catch(function (err) {
+        actionError(err.message);
+      });
+    }
+  }
+};// Import vue components
 
 var components = {
   VueAntdSuperForm: VueAntdSuperForm,
-  Form: Form$1(),
+  Form: Form$1,
   List: List,
-  Table: Table
+  Table: Table,
+  Modal: Modal
 };
 
 
@@ -786,9 +883,4 @@ if (typeof window !== 'undefined') {
 
 if (GlobalVue) {
   GlobalVue.use(plugin);
-}
-
-// To allow individual component use, export components
-// each can be registered via Vue.component()
-// export const f = components;
-exports.components=components;exports.default=plugin;
+}exports.components=components;exports.default=plugin;

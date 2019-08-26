@@ -20,11 +20,6 @@ import {
 } from 'ant-design-vue';
 
 
-// import Func from './Func';
-// import WrapperInput from './WrapperInput';
-// import WrapperSwitch from './WrapperSwitch';
-// import WrapperUpload from './WrapperUpload';
-
 export default {
   // 类一
   input: Input,

@@ -3,12 +3,14 @@ import VueAntdSuperForm from './lib-components/index';
 import Table from './lib-components/Table';
 import List from './lib-components/List';
 import Form from './lib-components/Form';
+import Modal from './lib-components/Modal';
 
 export const components = {
   VueAntdSuperForm,
-  Form: Form(),
+  Form,
   List,
-  Table
+  Table,
+  Modal
 }
 
 
@@ -41,7 +43,3 @@ if (GlobalVue) {
 
 // Default export is library as a whole, registered via Vue.use()
 export default plugin;
-
-// To allow individual component use, export components
-// each can be registered via Vue.component()
-// export const f = components;

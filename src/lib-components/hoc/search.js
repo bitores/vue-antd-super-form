@@ -7,9 +7,10 @@ export default (Component) => {
       ...Component.props,
     },
 
-    beforeMount() {
-      // this.hoc = null;
-      this.form = null;
+    data() {
+      return {
+        form: null
+      }
     },
 
     render(h) {
