@@ -1,5 +1,16 @@
 // Import vue components
-import * as components from './lib-components/index';
+import VueAntdSuperForm from './lib-components/index';
+import Table from './lib-components/Table';
+import List from './lib-components/List';
+import Form from './lib-components/Form';
+
+export const components = {
+  VueAntdSuperForm,
+  Form: Form(),
+  List,
+  Table
+}
+
 
 // install function executed by Vue.use()
 function install(Vue) {
@@ -23,6 +34,7 @@ if (typeof window !== 'undefined') {
 } else if (typeof global !== 'undefined') {
   GlobalVue = global.Vue;
 }
+
 if (GlobalVue) {
   GlobalVue.use(plugin);
 }
@@ -32,4 +44,4 @@ export default plugin;
 
 // To allow individual component use, export components
 // each can be registered via Vue.component()
-export * from './lib-components/index';
+// export const f = components;
