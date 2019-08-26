@@ -79,8 +79,7 @@ export default (Component) => {
       _vueinit(props, isInit = false) {
         const { pagination = true, dataSource, total = 0 } = props;
         const { current = 1, pageSize = 10 } = pagination;
-        this.list.splice(0)
-        this.list.push(...dataSource);
+        this.list = dataSource;
         this.totalData = total;
         this.currentPage = current;
         this.pageSizeData = pageSize;
@@ -158,8 +157,7 @@ export default (Component) => {
 
 
           if (status) {
-            this.list.splice(0)
-            this.list.push(...dataSource);
+            this.list = dataSource;
             this.totalData = total;
 
           } else {

@@ -529,16 +529,14 @@ function hoc (Component) {
     methods: {
       // 在生命周期中 使用 props 时要注意其有效性
       _vueinit: function _vueinit(props, isInit) {
-        var ref;
-
         if ( isInit === void 0 ) isInit = false;
+
         var pagination = props.pagination; if ( pagination === void 0 ) pagination = true;
         var dataSource = props.dataSource;
         var total = props.total; if ( total === void 0 ) total = 0;
         var current = pagination.current; if ( current === void 0 ) current = 1;
         var pageSize = pagination.pageSize; if ( pageSize === void 0 ) pageSize = 10;
-        this.list.splice(0)
-        (ref = this.list).push.apply(ref, dataSource);
+        this.list = dataSource;
         this.totalData = total;
         this.currentPage = current;
         this.pageSizeData = pageSize;
@@ -620,8 +618,6 @@ function hoc (Component) {
         }
 
         request.then(function (res) {
-          var ref$1;
-
           var ref = valueMap(res);
           var dataSource = ref.dataSource;
           var total = ref.total;
@@ -629,8 +625,7 @@ function hoc (Component) {
 
 
           if (status) {
-            this$1.list.splice(0)
-            (ref$1 = this$1.list).push.apply(ref$1, dataSource);
+            this$1.list = dataSource;
             this$1.totalData = total;
 
           } else {
