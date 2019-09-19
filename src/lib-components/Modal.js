@@ -2,7 +2,7 @@ import { Modal, message } from 'ant-design-vue';
 import Form from './Form';
 import { toString, filter } from './utils';
 
-export default {
+const Dialog = {
   props: {
     ...Modal.props,
     footer: [Array, Function],
@@ -51,13 +51,13 @@ export default {
         ok: _onOk,
       }
     }, [
-        h(Form, {
-          props: {
-            _bindForm: (form) => { this.form = form },
-            ...search,
-          }
-        })
-      ])
+      h(Form, {
+        props: {
+          _bindForm: (form) => { this.form = form },
+          ...search,
+        }
+      })
+    ])
   },
   methods: {
     show(isShow = true, callback) {
@@ -103,3 +103,11 @@ export default {
     }
   }
 }
+
+Dialog.info = Modal.info;
+Dialog.success = Modal.success;
+Dialog.error = Modal.error;
+Dialog.warning = Modal.warning;
+Dialog.confirm = Modal.confirm;
+
+export default Dialog;

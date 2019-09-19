@@ -47,6 +47,8 @@ function injectEvent (obj, form) {
   checkboxgroup: antDesignVue.Checkbox.Group,
 
   //
+  divider: antDesignVue.Divider,
+  //
   steps: antDesignVue.Steps,
 
   // 类四
@@ -137,11 +139,27 @@ function createFormItem (obj, form, createElement) {
           pr),
         on: on,
       }, [
-          text
-        ]);
+        text
+      ]);
     }
 
       break;
+    case 'divider': {
+      var sfType = props.sfType;
+      var text$1 = props.text;
+      var style$1 = props.style;
+      var on$1 = props.on; if ( on$1 === void 0 ) on$1 = {};
+      var rest = objectWithoutProperties( props, ["sfType", "text", "style", "on"] );
+      var pr$1 = rest;
+
+      formElement = createElement(Component, {
+        style: style$1,
+        on: on$1,
+        props: Object.assign({}, {type: sfType},
+          pr$1),
+      });
+    } break;
+
     case 'input':
     case 'inputnumber': // InputNumber
     case 'password': // Input.Number
@@ -156,14 +174,14 @@ function createFormItem (obj, form, createElement) {
     case 'cascader':
     case 'autocomplete':
     case 'rate': {
-      var style$1 = props.style;
-      var on$1 = props.on; if ( on$1 === void 0 ) on$1 = {};
+      var style$2 = props.style;
+      var on$2 = props.on; if ( on$2 === void 0 ) on$2 = {};
       var rest = objectWithoutProperties( props, ["style", "on"] );
-      var pr$1 = rest;
+      var pr$2 = rest;
       formElement = createElement(Component, {
-        style: style$1,
-        on: on$1,
-        props: pr$1
+        style: style$2,
+        on: on$2,
+        props: pr$2
       });
     }
       break;
@@ -173,15 +191,15 @@ function createFormItem (obj, form, createElement) {
     case 'checkboxgroup':
     case 'radiogroup': {
       var options = props.options; if ( options === void 0 ) options = [];
-      var style$2 = props.style;
-      var on$2 = props.on; if ( on$2 === void 0 ) on$2 = {};
+      var style$3 = props.style;
+      var on$3 = props.on; if ( on$3 === void 0 ) on$3 = {};
       var rest = objectWithoutProperties( props, ["options", "style", "on"] );
-      var pr$2 = rest;
+      var pr$3 = rest;
       formElement = createElement(Component, {
-        style: style$2,
-        on: on$2,
+        style: style$3,
+        on: on$3,
         props: Object.assign({}, {options: transToArray(options)},
-          pr$2)
+          pr$3)
       });
     }
       break;
@@ -189,23 +207,23 @@ function createFormItem (obj, form, createElement) {
     case 'select':
     case 'mentions': {
       var options$1 = props.options; if ( options$1 === void 0 ) options$1 = [];
-      var style$3 = props.style;
-      var on$3 = props.on; if ( on$3 === void 0 ) on$3 = {};
+      var style$4 = props.style;
+      var on$4 = props.on; if ( on$4 === void 0 ) on$4 = {};
       var rest = objectWithoutProperties( props, ["options", "style", "on"] );
-      var pr$3 = rest;
+      var pr$4 = rest;
 
       formElement = createElement(Component, {
-        style: style$3,
-        on: on$3,
-        props: Object.assign({}, pr$3)
+        style: style$4,
+        on: on$4,
+        props: Object.assign({}, pr$4)
       }, transToArray(options$1).map(function (item) { return createElement(Component.Option, {
         props: {
           key: item.key || item.value,
           value: item.value,
         }
       }, [
-          item.label
-        ]); }
+        item.label
+      ]); }
       ));
     }
       break;
@@ -213,56 +231,56 @@ function createFormItem (obj, form, createElement) {
     case 'uploaddragger':
     case 'upload': {
       var innerHTML = props.innerHTML;
-      var style$4 = props.style;
-      var on$4 = props.on; if ( on$4 === void 0 ) on$4 = {};
+      var style$5 = props.style;
+      var on$5 = props.on; if ( on$5 === void 0 ) on$5 = {};
       var rest = objectWithoutProperties( props, ["innerHTML", "style", "on"] );
-      var pr$4 = rest;
+      var pr$5 = rest;
 
       formElement = createElement(Component, {
-        style: style$4,
-        on: on$4,
-        props: Object.assign({}, pr$4)
+        style: style$5,
+        on: on$5,
+        props: Object.assign({}, pr$5)
       }, [
-          innerHTML && innerHTML()
-        ]);
+        innerHTML && innerHTML()
+      ]);
     }
       break;
 
 
     case 'radiobutton': {
       var options$2 = props.options; if ( options$2 === void 0 ) options$2 = [];
-      var style$5 = props.style;
-      var on$5 = props.on; if ( on$5 === void 0 ) on$5 = {};
+      var style$6 = props.style;
+      var on$6 = props.on; if ( on$6 === void 0 ) on$6 = {};
       var rest = objectWithoutProperties( props, ["options", "style", "on"] );
-      var pr$5 = rest;
+      var pr$6 = rest;
 
       formElement = createElement(Component.Group, {
-        style: style$5,
-        on: on$5,
-        props: Object.assign({}, pr$5)
+        style: style$6,
+        on: on$6,
+        props: Object.assign({}, pr$6)
       }, transToArray(options$2).map(function (item) { return createElement(Component.Button, {
         props: {
           key: item.key || item.value,
           value: item.value,
         }
       }, [
-          item.label
-        ]); }
+        item.label
+      ]); }
       ));
     }
       break;
 
     case 'steps': {
       var options$3 = props.options; if ( options$3 === void 0 ) options$3 = [];
-      var style$6 = props.style;
-      var on$6 = props.on; if ( on$6 === void 0 ) on$6 = {};
+      var style$7 = props.style;
+      var on$7 = props.on; if ( on$7 === void 0 ) on$7 = {};
       var rest = objectWithoutProperties( props, ["options", "style", "on"] );
-      var pr$6 = rest;
+      var pr$7 = rest;
 
       formElement = createElement(Component, {
-        style: style$6,
-        on: on$6,
-        props: Object.assign({}, pr$6)
+        style: style$7,
+        on: on$7,
+        props: Object.assign({}, pr$7)
       }, transToArray(options$3).map(function (item) { return createElement(Component.Step, {
         props: Object.assign({}, {key: item.key || item.title},
           item)
@@ -741,7 +759,7 @@ var VueAntdSuperForm = withSearch({
   }
 });function objectWithoutProperties$4 (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
 
-var Modal = {
+var Dialog = {
   props: Object.assign({}, antDesignVue.Modal.props,
     {footer: [Array, Function],
     search: [Object, Function],
@@ -790,11 +808,11 @@ var Modal = {
         ok: _onOk,
       }
     }, [
-        h(Form$1, {
-          props: Object.assign({}, {_bindForm: function (form) { this$1.form = form; }},
-            search)
-        })
-      ])
+      h(Form$1, {
+        props: Object.assign({}, {_bindForm: function (form) { this$1.form = form; }},
+          search)
+      })
+    ])
   },
   methods: {
     show: function show(isShow, callback) {
@@ -847,14 +865,20 @@ var Modal = {
       });
     }
   }
-};// Import vue components
+};
+
+Dialog.info = antDesignVue.Modal.info;
+Dialog.success = antDesignVue.Modal.success;
+Dialog.error = antDesignVue.Modal.error;
+Dialog.warning = antDesignVue.Modal.warning;
+Dialog.confirm = antDesignVue.Modal.confirm;// Import vue components
 
 var components = {
   VueAntdSuperForm: VueAntdSuperForm,
   Form: Form$1,
   List: List,
   Table: Table,
-  Modal: Modal
+  Modal: Dialog
 };
 
 

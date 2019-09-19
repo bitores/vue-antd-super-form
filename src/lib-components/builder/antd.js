@@ -16,7 +16,8 @@ import {
   DatePicker,
   TimePicker,
   AutoComplete,
-  Steps
+  Steps,
+  Divider
 } from 'ant-design-vue';
 
 
@@ -49,6 +50,8 @@ export default {
   checkbox: Checkbox.Group,
   checkboxgroup: Checkbox.Group,
 
+  //
+  divider: Divider,
   //
   steps: Steps,
 

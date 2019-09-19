@@ -37,11 +37,24 @@ export default (obj, form, createElement) => {
         },
         on,
       }, [
-          text
-        ])
+        text
+      ])
     }
 
       break;
+    case 'divider': {
+      let { sfType, text, style, on = {}, ...pr } = props;
+
+      formElement = createElement(Component, {
+        style,
+        on,
+        props: {
+          type: sfType,
+          ...pr,
+        },
+      })
+    } break;
+
     case 'input':
     case 'inputnumber': // InputNumber
     case 'password': // Input.Number
@@ -97,8 +110,8 @@ export default (obj, form, createElement) => {
           value: item.value,
         }
       }, [
-          item.label
-        ])
+        item.label
+      ])
       ));
     }
       break;
@@ -114,8 +127,8 @@ export default (obj, form, createElement) => {
           ...pr
         }
       }, [
-          innerHTML && innerHTML()
-        ])
+        innerHTML && innerHTML()
+      ])
     }
       break;
 
@@ -135,8 +148,8 @@ export default (obj, form, createElement) => {
           value: item.value,
         }
       }, [
-          item.label
-        ])
+        item.label
+      ])
       ));
     }
       break;

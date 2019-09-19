@@ -1,6 +1,6 @@
 {
   "name": "vue-antd-super-form",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "",
   "main": "./dist/vue-antd-super-form.ssr.js",
   "module": "./dist/vue-antd-super-form.esm.js",
