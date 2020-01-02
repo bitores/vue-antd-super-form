@@ -20,6 +20,7 @@ import {
   Divider
 } from 'ant-design-vue';
 
+import SFUpload from 'vue-antd-super-upload';
 
 export default {
   // 类一
@@ -58,6 +59,7 @@ export default {
   // 类四
   upload: Upload,
   uploaddragger: Upload.Dragger,
+  sfupload: SFUpload,
 
   // 自定义
 }

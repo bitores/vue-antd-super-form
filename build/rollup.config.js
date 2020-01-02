@@ -48,7 +48,7 @@ if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
     output: {
-      file: 'src/dist/vue-antd-super-form.esm.js',
+      file: 'dist/vue-antd-super-form.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -72,7 +72,7 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'src/dist/vue-antd-super-form.ssr.js',
+      file: 'dist/vue-antd-super-form.ssr.js',
       format: 'cjs',
       name: 'VueAntdSuperForm',
       exports: 'named',
@@ -99,7 +99,7 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'src/dist/vue-antd-super-form.min.js',
+      file: 'dist/vue-antd-super-form.min.js',
       format: 'iife',
       name: 'VueAntdSuperForm',
       exports: 'named',

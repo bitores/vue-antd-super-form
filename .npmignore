@@ -13,3 +13,5 @@ lib-components
 entry.js
 lib-dev.vue
 package-lock.json
+/src
+/build

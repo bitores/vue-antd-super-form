@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});var antDesignVue=require('ant-design-vue');var events = ['click', 'change', 'blur', 'focus', 'hoverChange', 'keyDown', 'select', 'ok', 'pressEnter'];
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var antDesignVue=require('ant-design-vue'),SFUpload=_interopDefault(require('vue-antd-super-upload'));var events = ['click', 'change', 'blur', 'focus', 'hoverChange', 'keyDown', 'select', 'ok', 'pressEnter'];
 
 function injectEvent (obj, form) {
   var newObj = Object.assign({}, obj,
@@ -54,6 +54,7 @@ function injectEvent (obj, form) {
   // 类四
   upload: antDesignVue.Upload,
   uploaddragger: antDesignVue.Upload.Dragger,
+  sfupload: SFUpload,
 
   // 自定义
 };var toString = Object.prototype.toString;
@@ -229,6 +230,7 @@ function createFormItem (obj, form, createElement) {
       break;
 
     case 'uploaddragger':
+    case 'sfupload':
     case 'upload': {
       var innerHTML = props.innerHTML;
       var style$5 = props.style;
@@ -827,7 +829,7 @@ var Dialog = {
     },
 
     _afterClose: function _afterClose(callback) {
-      this.form.resetFields();
+      this.form && this.form.resetFields();
       callback && callback();
     },
 

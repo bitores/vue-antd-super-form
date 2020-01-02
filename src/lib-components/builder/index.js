@@ -117,6 +117,7 @@ export default (obj, form, createElement) => {
       break;
 
     case 'uploaddragger':
+    case 'sfupload':
     case 'upload': {
       const { innerHTML, style, on = {}, ...pr } = props;
 
